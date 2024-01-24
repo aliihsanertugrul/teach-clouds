@@ -1,18 +1,12 @@
-"use client"
-import React, { useEffect } from 'react'
+"use client";
+import React, { useEffect } from "react";
 
-const BootstrapProvider = ({children}) => {
+const BootstrapProvider = ({ children }) => {
+	useEffect(() => {
+		require("bootstrap/dist/js/bootstrap.bundle.min.js");
+	}, []);
 
-    useEffect(() => {
-     require("bootstrap/dist/js/bootstrap.bundle.min.js") 
-    }, [])
-    
+	return <>{children}</>;
+};
 
-  return (
-    <>
-    {children}
-    </>
-  )
-}
-
-export default BootstrapProvider
+export default BootstrapProvider;

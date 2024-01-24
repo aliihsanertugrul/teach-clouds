@@ -7,9 +7,8 @@ export const metadata = {
 
 export default function HomePage() {
 	return (
-
-	<> 
-	<Slider/>
-	</>
-	)
+		<>
+			<Slider />
+		</>
+	);
 }
