@@ -2,8 +2,8 @@ import { config } from "@/helpers/config";
 
 const API_URL = config.api.baseUrl;
 
-export const createMessage = (payload) => {
-  return fetch(`${API_URL}/contactMessages/save`, {
+export const login = (payload) => {
+  return fetch(`${API_URL}/auth/login`, {
     method: "post",
     body: JSON.stringify(payload),
     headers: {

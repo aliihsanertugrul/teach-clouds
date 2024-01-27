@@ -1,6 +1,10 @@
 "use server";
 
-import { convertFormDataToJson, getYupErrors } from "@/helpers/form-validation";
+import {
+	convertFormDataToJson,
+	getYupErrors,
+	response,
+} from "@/helpers/form-validation";
 import { createMessage } from "@/services/contact-service";
 import * as Yup from "yup";
 
@@ -21,26 +25,15 @@ export const createMessageAction = async (prevState, formData) => {
 		const data = await res.json();
 
 		if (!res.ok) {
-			console.log(data);
-			throw (data?.validations);
+			return response(false, "", data?.validations);
 		}
 
-		return {
-			success: true,
-			message: "Your message was sent",
-		};
+		return response(true, "Your message was sent");
 	} catch (err) {
 		if (err instanceof Yup.ValidationError) {
-            console.log(err.inner);
-            console.log(getYupErrors(err.inner))
 			return getYupErrors(err.inner);
 		}
 
-        
-		return {
-			success: false,
-			message: '',
-			errors: err,
-		};
+		throw new Error(err);
 	}
 };
