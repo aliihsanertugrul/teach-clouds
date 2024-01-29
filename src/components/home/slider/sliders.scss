@@ -4,7 +4,6 @@
 .main-slider {
 	.carousel-item {
 		height: calc(100vh - 110px);
-		width: 100%;
 	}
 
 	.carousel-caption {
@@ -23,10 +22,8 @@
 		object-fit: cover;
 		object-position: left center;
 
-		@media(min-width:1200px){
+		@media(min-width: 1200px){
 			object-position: right center;
 		}
 	}
-
-	
 }

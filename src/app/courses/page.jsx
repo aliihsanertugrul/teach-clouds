@@ -7,7 +7,7 @@ const CoursesPage = () => {
   return (
     <>
       <PageHeader title="Courses"/>
-      <Spacer/>
+      <Spacer height={50}/>
       <Courses/>
       <Spacer/>
     </>

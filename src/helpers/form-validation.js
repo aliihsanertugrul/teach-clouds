@@ -12,10 +12,8 @@ export const getYupErrors = (errors) => {
 	const errObj = {};
 	errors.forEach((error) => (errObj[error.path] = error.message));
 
-	return response(false,"",errObj);
+	return response(false, "", errObj);
 };
-
-
 
 export const convertFormDataToJson = (formData) =>
 	Object.fromEntries(formData.entries());

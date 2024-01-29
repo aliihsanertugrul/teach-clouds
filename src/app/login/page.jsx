@@ -5,12 +5,12 @@ import React from 'react'
 
 const LoginPage = () => {
   return (
-    <div>
-      <PageHeader title="login"/>
-      <Spacer/>
+    <>
+      <PageHeader title="Login"/>
+      <Spacer height={50}/>
       <LoginForm/>
       <Spacer/>
-    </div>
+    </>
   )
 }
 

@@ -1,29 +1,37 @@
-"use server"
-import { signIn } from "@/auth"
-import { convertFormDataToJson } from "@/helpers/form-validation"
-import { AuthError } from "next-auth"
-import * as Yup from "yup"
+"use server";
 
-const FormSchema=()=>Yup.object({
-    username:Yup.string().required("Required"),
-    password:Yup.string().required("Required"),
-})
+import { signIn } from "@/auth";
+import { convertFormDataToJson, response } from "@/helpers/form-validation";
+import { AuthError } from "next-auth";
+import * as Yup from "yup";
 
-export const loginAction=async (prevState,formData)=>{
-    const fields=convertFormDataToJson(formData);
+const FormSchema = Yup.object({
+	username: Yup.string().required("Required"),
+	password: Yup.string().required("Required"),
+});
+
+export const loginAction = async (prevState, formData) =>{
+
+    const fields = convertFormDataToJson(formData);
 
     try {
-        FormSchema.validateSync(fields,{abortEarly:false});
-        await signIn("credentials",fields);
+        FormSchema.validateSync(fields, { abortEarly: false});
+
+        await signIn("credentials", fields);
+
+
     } catch (err) {
         if (err instanceof Yup.ValidationError) {
 			return getYupErrors(err.inner);
-		}else if(err instanceof AuthError){
-            if(err.type==="CredentialsSignin"){
-                
+		}
+        else if(err instanceof AuthError){
+            if(err.type==='CredentialsSignin'){
+                return response(false, 'Invalid credentials')
             }
+            
         }
 
 		throw new Error(err);
     }
+
 }

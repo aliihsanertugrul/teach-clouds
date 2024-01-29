@@ -10,24 +10,25 @@ import { swalAlert } from "@/helpers/swal";
 import { initialResponse } from "@/helpers/form-validation";
 
 const ContactForm = () => {
-	
 	const [state, dispatch] = useFormState(createMessageAction, initialResponse);
-  const formRef=useRef(null);
-	
-if(state.message){
-   if(state.success){
-    formRef.current.reset();
-    swalAlert(state.message,"success")
-  }else{
-    swalAlert(state.message,"error")
-  }
-}
- 
+	const formRef = useRef(null);
 
-
+	if (state.message) {
+		if (state.success) {
+			formRef.current.reset();
+			swalAlert(state.message, "success");
+		} else {
+			swalAlert(state.message, "error");
+		}
+	}
 
 	return (
-		<form className="contact-form" action={dispatch} noValidate ref={formRef}>
+		<form
+			className="contact-form"
+			action={dispatch}
+			noValidate
+			ref={formRef}
+		>
 			<h2>Send Me Message</h2>
 
 			<div className="row">
@@ -50,7 +51,9 @@ if(state.message){
 							/>
 							<label htmlFor="name">Your name</label>
 						</div>
-						<div className="invalid-feedback">{state.errors?.name}</div>
+						<div className="invalid-feedback">
+							{state.errors?.name}
+						</div>
 					</div>
 				</div>
 				<div className="col-lg-6">
@@ -129,7 +132,7 @@ if(state.message){
 					</div>
 				</div>
 			</div>
-			<SubmitButton title="Send" icon={<FaRegPaperPlane/>}/>
+			<SubmitButton title="Send" icon={<FaRegPaperPlane />} />
 		</form>
 	);
 };

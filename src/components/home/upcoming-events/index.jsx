@@ -1,24 +1,21 @@
 "use client";
 import React from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
 import "swiper/css";
+import 'swiper/css/navigation';
 import events from "@/helpers/data/events.json";
 import EventCard from "@/components/events/event-card";
 import { Navigation } from "swiper/modules";
-import "./style.scss";
+import "./style.scss"
 
 const UpcomingEvents = () => {
-  const upcomingEvents = events.filter(
-    (item) => new Date() < new Date(item.date)
-    
-  );
-  
+	const upcomingEvents = events.filter(
+		(item) => new Date() < new Date(item.date)
+	);
 
-  return (
-    <div className="upcoming-events">
+	return (
+		<div className="upcoming-events">
 			<div className="container">
 				<h2>
 					<span className="prev">
@@ -58,7 +55,7 @@ const UpcomingEvents = () => {
 				</Swiper>
 			</div>
 		</div>
-  );
+	);
 };
 
 export default UpcomingEvents;

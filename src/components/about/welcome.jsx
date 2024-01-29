@@ -6,7 +6,7 @@ import { config } from "@/helpers/config";
 const Welcome = () => {
 	return (
 		<div className="welcome container">
-			<div className="row g-4 align-items-center">
+			<div className="row g-4 align-items-center ">
 				<div className="col-md-6">
 					<Image
 						src={aboutImage}

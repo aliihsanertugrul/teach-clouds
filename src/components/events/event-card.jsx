@@ -1,11 +1,14 @@
-import Image from 'next/image'
-import React from 'react'
-import "./event-card.scss"
-import { TfiAlarmClock, TfiLocationPin} from 'react-icons/tfi'
+import Image from "next/image";
+import React from "react";
+import "./event-card.scss";
+import {
+	TfiAlarmClock,
+	TfiLocationPin,
+} from "react-icons/tfi";
 
-const EventCard = ({title,time,location,image}) => {
-  return (
-    <div className="card event-card">
+const EventCard = ({ image, title, time, location }) => {
+	return (
+		<div className="card event-card">
 			<div className="card-body">
 				<div className="image">
 					<Image
@@ -18,20 +21,18 @@ const EventCard = ({title,time,location,image}) => {
 				</div>
 
 				<div className="card-subtitle">
-				<div>
-					<TfiAlarmClock /> {time}
+					<div>
+						<TfiAlarmClock /> {time}
+					</div>
+					<div>
+						<TfiLocationPin /> {location}
+					</div>
 				</div>
-				<div>
-					<TfiLocationPin /> {location}
-				</div>
-				
-			</div>
 
 				<h4 className="card-title">{title}</h4>
 			</div>
-			
 		</div>
-  )
-}
+	);
+};
 
-export default EventCard
+export default EventCard;

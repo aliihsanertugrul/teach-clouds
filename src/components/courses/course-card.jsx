@@ -1,11 +1,11 @@
-import Image from 'next/image'
-import React from 'react'
-import "./course-card.scss"
-import { TfiBarChart, TfiMoney, TfiUser } from 'react-icons/tfi'
+import Image from "next/image";
+import React from "react";
+import "./course-card.scss";
+import { TfiBarChart, TfiMoney, TfiUser } from "react-icons/tfi";
 
-const CourseCard = ({title,image,user,rating,price}) => {
-  return (
-    <div className="card course-card">
+const CourseCard = ({ image, title, user, rating, price }) => {
+	return (
+		<div className="card course-card">
 			<div className="card-body">
 				<div className="image">
 					<Image
@@ -31,7 +31,7 @@ const CourseCard = ({title,image,user,rating,price}) => {
 				</div>
 			</div>
 		</div>
-  )
-}
+	);
+};
 
-export default CourseCard
+export default CourseCard;

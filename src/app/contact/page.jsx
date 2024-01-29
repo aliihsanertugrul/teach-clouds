@@ -5,11 +5,12 @@ import React from 'react'
 
 const ContactPage = () => {
   return (
-    <div>
+    <>
       <PageHeader title="Contact"/>
-      <Spacer/>
+      <Spacer height={50}/>
       <Contact/>
-    </div>
+
+    </>
   )
 }
 

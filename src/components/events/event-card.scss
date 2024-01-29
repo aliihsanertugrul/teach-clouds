@@ -33,7 +33,7 @@
 
 	&:hover {
 		img {
-			@include m.transform(scale(1.2) rotate(5deg));
+			@include m.transform(scale(1.2) rotate(10deg));
 		}
 	}
 }

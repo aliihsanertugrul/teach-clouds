@@ -33,7 +33,7 @@ const Slider = () => {
 							width={1800}
 							height={800}
 						/>
-						<div className="carousel-caption ">
+						<div className="carousel-caption">
 							<h2>{item.title}</h2>
 							<h5>{item.desc}</h5>
 						</div>
@@ -50,7 +50,7 @@ const Slider = () => {
 					className="carousel-control-prev-icon"
 					aria-hidden="true"
 				></span>
-				<span className="visually-hidden ">Previous</span>
+				<span className="visually-hidden">Previous</span>
 			</button>
 			<button
 				className="carousel-control-next"

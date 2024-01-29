@@ -6,10 +6,15 @@
     h2{
         color: v.$color2;
         margin-bottom: 50px;
-        @include m.flex($fd:row)
+        @include m.flex($fd: row)
     }
 
     .swiper-slide{
         height: auto;
     }
+
+    
+	.prev, .next{
+		cursor: pointer;
+	}
 }

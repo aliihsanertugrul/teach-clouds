@@ -1,8 +1,7 @@
 import Swal from "sweetalert2";
 
-
 export const swalAlert = (title, icon = "info", text = "") => {
-    // icon: error, success, info, warning, question
+	// icon: error, success, info, warning, question
 	Swal.fire({
 		title,
 		text,
@@ -10,14 +9,18 @@ export const swalAlert = (title, icon = "info", text = "") => {
 	});
 };
 
-
-export const swalConfirm= (title, icon = "info", text = "",confirmButtonText="Yes") => {
-    // icon: error, success, info, warning, question
+export const swalConfirm = (
+	title,
+	icon = "info",
+	text = "",
+	confirmButtonText = "Yes"
+) => {
+	// icon: error, success, info, warning, question
 	return Swal.fire({
 		title,
 		text,
 		icon,
-        showCancelButton:true,
-        confirmButtonText,
+		showCancelButton: true,
+		confirmButtonText,
 	});
 };
