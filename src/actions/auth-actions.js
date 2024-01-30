@@ -28,10 +28,10 @@ export const loginAction = async (prevState, formData) =>{
             if(err.type==='CredentialsSignin'){
                 return response(false, 'Invalid credentials')
             }
-            
+            return response(false,"Something went wrong.")
         }
 
-		throw new Error(err);
+		throw (err);
     }
 
 }
