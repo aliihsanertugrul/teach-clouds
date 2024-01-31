@@ -1,12 +1,12 @@
 "use client";
 import { useFormStatus } from "react-dom";
 
-const SubmitButton = ({ title, icon = null }) => {
+const SubmitButton = ({ title="Submit", icon = null }) => {
 	const { pending } = useFormStatus();
 	return (
 		<button
 			type="submit"
-			className="btn btn-primary mt-4"
+			className="btn btn-primary"
 			disabled={pending}
 		>
 			{pending ? (

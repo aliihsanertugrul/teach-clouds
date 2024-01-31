@@ -3,21 +3,34 @@ import Link from "next/link";
 import React from "react";
 
 const AdminList = ({ data }) => {
-    const { content } = data;
+  const { content, totalPages, number, size } = data;
+// console.log("data",data)
 
-	return (
-		<div className="container">
-			<Link href="/dashboard/admin/new" className="btn btn-primary mb-3">
-				New
-			</Link>
-            <DataTable title="Admin List" dataSource={content} dataKey="id">
-                <Column index={true} title="#"/>
-                <Column title="First Name" field="name"/>
-                <Column title="Last Name" field="surname"/>
-                <Column title="Username" field="username"/>
-            </DataTable>
-		</div>
-	);
+const handleToolBar = (row) => {
+  return <button>Del</button>
+}
+  return (
+    <div className="container">
+      <Link href="/dashboard/admin/new" className="btn btn-primary mb-3">
+        New
+      </Link>
+      <DataTable
+        title="Admin List"
+        dataSource={content}
+        dataKey="id"
+        pagination={true}
+        totalPages={totalPages}
+        pageNumber={number}
+        pageSize={size}
+      >
+        <Column index={true} title="#" />
+        <Column title="First Name" field="name" />
+        <Column title="Last Name" field="surname" />
+        <Column title="Username" field="username" />
+        <Column title="Tools" template={handleToolBar} />
+      </DataTable>
+    </div>
+  );
 };
 
 export default AdminList;

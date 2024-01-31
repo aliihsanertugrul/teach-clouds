@@ -8,7 +8,7 @@ import { loginAction } from "@/actions/auth-actions";
 const LoginForm = () => {
   const [state, dispatch] = useFormState(loginAction, initialResponse);
 
-  console.log(state);
+  // console.log(state);
 
   return (
     <div className="container login-form">

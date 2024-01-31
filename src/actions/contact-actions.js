@@ -34,6 +34,6 @@ export const createMessageAction = async (prevState, formData) => {
 			return getYupErrors(err.inner);
 		}
 
-		throw new Error(err);
+		throw (err);
 	}
 };

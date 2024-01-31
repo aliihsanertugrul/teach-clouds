@@ -4,9 +4,9 @@ import AdminList from '@/components/dashboard/admin/admin-list'
 import { getAllAdminsByPage } from '@/services/admin-service'
 import React from 'react'
 
-const AdminPage =async () => {
-
-  const res=await getAllAdminsByPage();
+const AdminPage =async ({searchParams}) => {
+  const {page}=searchParams;
+  const res=await getAllAdminsByPage(page,3);
   const data=await res.json()
   if(!res.ok) throw new Error(data.message)
   // console.log(data)
