@@ -5,7 +5,7 @@ import {
 	getYupErrors,
 	response,
 } from "@/helpers/form-validation";
-import { createAdmin, deleteAdmin } from "@/services/admin-service";
+import { createManager, deleteManager,updateManager } from "@/services/manager-service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import * as Yup from "yup";
@@ -13,7 +13,9 @@ import * as Yup from "yup";
 const FormSchema = Yup.object({
 	name: Yup.string().required("Required"),
 	surname: Yup.string().required("Required"),
-	gender: Yup.string().required("Required"),
+	gender: Yup.string()
+		.oneOf(["MALE", "FEMALE"], "Invalid gender")
+		.required("Required"),
 	birthPlace: Yup.string().required("Required"),
 	birthDay: Yup.string().required("Required"),
 	phoneNumber: Yup.string()
@@ -35,42 +37,63 @@ const FormSchema = Yup.object({
 	),
 });
 
-export const createAdminAction = async (prevState, formData) => {
+export const createManagerAction = async (prevState, formData) => {
 	try {
 		const fields = convertFormDataToJson(formData);
 
 		FormSchema.validateSync(fields, { abortEarly: false });
 
-		const res = await createAdmin(fields);
+		const res = await createManager(fields);
 		const data = await res.json();
 
 		if (!res.ok) {
 			return response(false, "", data?.validations);
 		}
-
-		
 	} catch (err) {
 		if (err instanceof Yup.ValidationError) {
 			return getYupErrors(err.inner);
 		}
 
-		throw (err);
+		throw err;
 	}
 
-	revalidatePath("/dashboard/admin")
-	redirect("/dashboard/admin")
+	revalidatePath("/dashboard/manager");
+	redirect("/dashboard/manager?success=true");
 };
 
+export const updateManagerAction = async (prevState, formData) => {
+	try {
+		const fields = convertFormDataToJson(formData);
 
-export const deleteAdminAction=async(id)=>{
-	if(!id) throw new Error("id is missing")
+		FormSchema.validateSync(fields, { abortEarly: false });
 
-	const res=await deleteAdmin(id);
-	const data=res.json();
+		const res = await updateManager(fields);
+		const data = await res.json();
 
-	if(!res.ok){
+		if (!res.ok) {
+			return response(false, "", data?.validations);
+		}
+	} catch (err) {
+		if (err instanceof Yup.ValidationError) {
+			return getYupErrors(err.inner);
+		}
+
+		throw err;
+	}
+
+	revalidatePath("/dashboard/manager");
+	redirect("/dashboard/manager?success=true");
+};
+
+export const deleteManagerAction = async (id) => {
+	if (!id) throw new Error("id is missing");
+
+	const res = await deleteManager(id);
+	const data = res.json();
+
+	if (!res.ok) {
 		throw new Error(data.message);
 	}
 
-	revalidatePath("/dashboard/admin")
-}
+	revalidatePath("/dashboard/manager");
+};

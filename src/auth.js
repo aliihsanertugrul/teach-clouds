@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { login } from "./services/auth-service";
+import { isUserAuthorized } from "./helpers/auth";
 
 
 const config = {
@@ -32,10 +33,16 @@ const config = {
             const  isOnDashboardPage=nextUrl.pathname.startsWith("/dashboard")
 
             if(isLoggedIn){
-                if(isOnLoginPage){
+                if(isOnDashboardPage){
+                    const isAuth=isUserAuthorized(auth.user.role,nextUrl.pathname);
+                    if(isAuth) return true;
+                    return Response.redirect(new URL("/unauthorized",nextUrl))
+                }
+                else if(isOnLoginPage){
                     return Response.redirect(new URL("/dashboard",nextUrl))
                 }
             }else if(isOnDashboardPage){
+                //kullanıcıyı login sayfasına gönderir.
                 return false
             }
             return true;

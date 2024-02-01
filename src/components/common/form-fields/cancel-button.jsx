@@ -8,7 +8,7 @@ const CancelButton = ({ title="Cancel", icon = null }) => {
 	return (
 		<button
 			type="button"
-			class="btn btn-outline-primary"
+			className="btn btn-outline-primary"
 			onClick={() => router.back()}
 		>
 			{icon} {title}

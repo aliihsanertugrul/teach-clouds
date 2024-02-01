@@ -1,22 +1,22 @@
 import DataTable, { Column } from "@/components/common/form-fields/data-table";
 import Link from "next/link";
 import React from "react";
-import AdminToolbar from "./admin-toolbar";
+import ManagerToolbar from "./manager-toolbar";
 
-const AdminList = ({ data }) => {
+const ManagerList = ({ data }) => {
   const { content, totalPages, number, size } = data;
 // console.log("data",data)
 
 const handleToolBar = (row) => {
-  return <AdminToolbar row={row}/>
+  return <ManagerToolbar row={row}/>
 }
   return (
     <div className="container">
-      <Link href="/dashboard/admin/new" className="btn btn-primary mb-3">
+      <Link href="/dashboard/manager/new" className="btn btn-primary mb-3">
         New
       </Link>
       <DataTable
-        title="Admin List"
+        title="Manager List"
         dataSource={content}
         dataKey="id"
         pagination={true}
@@ -34,4 +34,4 @@ const handleToolBar = (row) => {
   );
 };
 
-export default AdminList;
+export default ManagerList;
