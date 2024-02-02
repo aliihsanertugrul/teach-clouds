@@ -6,10 +6,10 @@ import React from 'react'
 const DashboardPage = () => {
   return (
     <>
-    <PageHeader title="Dashboard"/>
-    <Spacer/>
-    <DashboardNavigation/>
-    <Spacer/>
+      <PageHeader title="Dashboard"/>
+      <Spacer height={50}/>
+      <DashboardNavigation/>
+      <Spacer/>
     </>
   )
 }

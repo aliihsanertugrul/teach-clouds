@@ -25,12 +25,14 @@ export const loginAction = async (prevState, formData) =>{
 			return getYupErrors(err.inner);
 		}
         else if(err instanceof AuthError){
+            
             if(err.type==='CredentialsSignin'){
                 return response(false, 'Invalid credentials')
             }
-            return response(false,"Something went wrong.")
+            // satir eklendi
+            return response(false, 'Something went wrong.')
         }
-
+        // satir eklendi
 		throw (err);
     }
 

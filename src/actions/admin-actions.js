@@ -13,7 +13,9 @@ import * as Yup from "yup";
 const FormSchema = Yup.object({
 	name: Yup.string().required("Required"),
 	surname: Yup.string().required("Required"),
-	gender: Yup.string().required("Required"),
+	gender: Yup.string()
+		.oneOf(["MALE", "FEMALE"], "Invalid gender")
+		.required("Required"),
 	birthPlace: Yup.string().required("Required"),
 	birthDay: Yup.string().required("Required"),
 	phoneNumber: Yup.string()
@@ -47,30 +49,30 @@ export const createAdminAction = async (prevState, formData) => {
 		if (!res.ok) {
 			return response(false, "", data?.validations);
 		}
-
-		
 	} catch (err) {
 		if (err instanceof Yup.ValidationError) {
 			return getYupErrors(err.inner);
 		}
 
-		throw (err);
+		throw err;
 	}
 
-	revalidatePath("/dashboard/admin")
-	redirect("/dashboard/admin")
+	revalidatePath("/dashboard/admin");
+	redirect(`/dashboard/admin?msg=${encodeURI("Admin was created")}`);
+	
 };
 
+export const deleteAdminAction = async (id) => {
+	if (!id) throw new Error("id is missing");
 
-export const deleteAdminAction=async(id)=>{
-	if(!id) throw new Error("id is missing")
-
-	const res=await deleteAdmin(id);
-	const data=res.json();
-
-	if(!res.ok){
-		throw new Error(data.message);
+	const res = await deleteAdmin(id);
+	//const data = await res.json();
+	// Backend den json tipinde olmayan bir mesaj geldi[i icin hata veriyor]
+	
+	if (!res.ok) {
+		throw new Error('Something went wrong');
 	}
 
-	revalidatePath("/dashboard/admin")
-}
+	revalidatePath("/dashboard/admin");
+	redirect(`/dashboard/admin?msg=${encodeURI("Admin was deleted")}`);
+};

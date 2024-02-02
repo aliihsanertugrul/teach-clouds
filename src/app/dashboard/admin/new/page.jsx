@@ -6,10 +6,10 @@ import React from 'react'
 const NewAdminPage = () => {
   return (
     <>
-        <PageHeader title="New Admin"/>
-        <Spacer height={50}/>
-        <NewAdminForm/>
-        <Spacer/>
+    <PageHeader title="New Admin"/>
+    <Spacer height={50}/>
+    <NewAdminForm/>
+    <Spacer/>
     </>
   )
 }

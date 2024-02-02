@@ -1,6 +1,6 @@
 export const initialResponse = { success: null, message: "", errors: {} };
 
-export const isInvalid=(err)=>{
+export const isInvalid = (err) => {
 	return err ? "is-invalid" : ""
 }
 
