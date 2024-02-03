@@ -16,8 +16,14 @@ export const getAllLessonsByPage = async (
 	});
 };
 
-export const deleteLesson = async (lessonId) => {
-	return fetch(`${API_URL}/lessons/delete/${lessonId}`, {
+export const getAllLessons = async () => {
+	return fetch(`${API_URL}/lessons/getAll`, {
+		headers: await getAuthHeader(),
+	});
+};
+
+export const deleteLesson = async (id) => {
+	return fetch(`${API_URL}/lessons/delete/${id}`, {
 		method: "delete",
 		headers: await getAuthHeader(),
 	});
@@ -30,3 +36,5 @@ export const createLesson = async (payload) => {
 		body: JSON.stringify(payload)
 	});
 };
+
+

@@ -1,24 +1,19 @@
 import DataTable, { Column } from "@/components/common/form-fields/data-table";
 import Link from "next/link";
 import React from "react";
+import { config } from "@/helpers/config";
 import LessonToolbar from "./lesson-toolbar";
+import { TfiCheck, TfiMinus } from "react-icons/tfi";
 
 const LessonList = ({ data }) => {
-	
 	const { content, totalPages, number, size } = data;
 
-	const handleComp = (row) => {
-		if(row.compulsory){
-			return "True"
-		}else{
-			return "False"
-		}
-		
-	}
-
 	const handleToolbar = (row) => {
-		
-		return <LessonToolbar row={row}/>;
+		return <LessonToolbar row={row} />;
+	};
+
+	const handleCompulsory = (row) => {
+		return row.compulsory ? <TfiCheck /> : <TfiMinus />;
 	};
 
 	return (
@@ -29,16 +24,16 @@ const LessonList = ({ data }) => {
 			<DataTable
 				title="Lesson List"
 				dataSource={content}
-				dataKey="id"
+				dataKey="lessonId"
 				pagination={true}
 				totalPages={totalPages}
 				pageNumber={number}
 				pageSize={size}
 			>
-				
-				<Column title="Lesson Name" field="lessonName" />
-				<Column title="Compulsory" template={handleComp} />
-				<Column title="Credit Score" field="creditScore" />
+				<Column index={true} title="#" />
+				<Column title="Name" field="lessonName"/>
+				<Column title="Credit" field="creditScore" />
+				<Column title="Compulsory" template={handleCompulsory} />
 				<Column title="Tools" template={handleToolbar} />
 			</DataTable>
 		</div>

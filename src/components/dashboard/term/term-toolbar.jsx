@@ -1,5 +1,5 @@
 "use client";
-
+import { deleteTermAction } from "@/actions/term-actions";
 import { swalAlert, swalConfirm } from "@/helpers/swal";
 import React from "react";
 import { TfiTrash } from "react-icons/tfi";

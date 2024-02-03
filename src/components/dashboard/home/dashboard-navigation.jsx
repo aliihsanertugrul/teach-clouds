@@ -5,7 +5,6 @@ import { auth } from "@/auth";
 
 const DashboardNavigation = async () => {
 	const session = await auth();
-	// console.log(session)
 	const userRole = session.user.role.toLowerCase();
 	const userMenu = userMenuData[userRole];
 

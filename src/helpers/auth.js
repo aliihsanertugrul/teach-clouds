@@ -8,7 +8,6 @@ export const getAuthHeader = async () => {
 	let authHeader = { "Content-Type": "application/json" };
 	if (token) {
 		authHeader = { Authorization: `Bearer ${token}`, ...authHeader };
-		// console.log(authHeader)
 	}
 
 	return authHeader;

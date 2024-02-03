@@ -5,6 +5,7 @@ import {
 	getYupErrors,
 	response,
 } from "@/helpers/form-validation";
+import { getGenderValues } from "@/helpers/misc";
 import { createAssistant, deleteAssistant, updateAssistant } from "@/services/assistant-service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -14,7 +15,7 @@ const FormSchema = Yup.object({
 	name: Yup.string().required("Required"),
 	surname: Yup.string().required("Required"),
 	gender: Yup.string()
-		.oneOf(["MALE", "FEMALE"], "Invalid gender")
+		.oneOf(getGenderValues(), "Invalid gender")
 		.required("Required"),
 	birthPlace: Yup.string().required("Required"),
 	birthDay: Yup.string().required("Required"),
@@ -47,7 +48,7 @@ export const createAssistantAction = async (prevState, formData) => {
 		const data = await res.json();
 
 		if (!res.ok) {
-			return response(false, "", data?.validations);
+			return response(false, data?.message, data?.validations);
 		}
 	} catch (err) {
 		if (err instanceof Yup.ValidationError) {
@@ -71,7 +72,7 @@ export const updateAssistantAction = async (prevState, formData) => {
 		const data = await res.json();
 
 		if (!res.ok) {
-			return response(false, "", data?.validations);
+			return response(false, data?.message, data?.validations);
 		}
 	} catch (err) {
 		if (err instanceof Yup.ValidationError) {

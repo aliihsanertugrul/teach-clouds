@@ -11,9 +11,12 @@ import { redirect } from "next/navigation";
 import * as Yup from "yup";
 
 const FormSchema = Yup.object({
-	compulsory:Yup.boolean().required("Required"),
-    creditScore:Yup.number().min(0,"Score must be greater than 0").max(100,"Score must be less than 100").required("Required"),
-    lessonName:Yup.string().required("Required")
+	lessonName: Yup.string().required("Required"),
+	creditScore: Yup.number()
+		.typeError("Invalid number")
+		.min(1, "Min 1")
+		.max(100, "Max 100")
+		.required("Required"),
 });
 
 export const createLessonAction = async (prevState, formData) => {
@@ -26,7 +29,7 @@ export const createLessonAction = async (prevState, formData) => {
 		const data = await res.json();
 
 		if (!res.ok) {
-			return response(false, "", data?.validations);
+			return response(false, data?.message, data?.validations);
 		}
 	} catch (err) {
 		if (err instanceof Yup.ValidationError) {
@@ -38,7 +41,6 @@ export const createLessonAction = async (prevState, formData) => {
 
 	revalidatePath("/dashboard/lesson");
 	redirect(`/dashboard/lesson?msg=${encodeURI("Lesson was created")}`);
-	
 };
 
 export const deleteLessonAction = async (id) => {
@@ -46,11 +48,9 @@ export const deleteLessonAction = async (id) => {
 
 	const res = await deleteLesson(id);
 	const data = await res.json();
-    
-	// Backend den json tipinde olmayan bir mesaj geldi[i icin hata veriyor]
-	
+	console.log(res)
 	if (!res.ok) {
-		throw new Error('Something went wrong');
+		throw new Error(data.message);
 	}
 
 	revalidatePath("/dashboard/lesson");

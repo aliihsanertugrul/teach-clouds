@@ -5,7 +5,12 @@ import {
 	getYupErrors,
 	response,
 } from "@/helpers/form-validation";
-import { createManager, deleteManager, updateManager } from "@/services/manager-service";
+import { getGenderValues } from "@/helpers/misc";
+import {
+	createManager,
+	deleteManager,
+	updateManager,
+} from "@/services/manager-service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import * as Yup from "yup";
@@ -14,7 +19,7 @@ const FormSchema = Yup.object({
 	name: Yup.string().required("Required"),
 	surname: Yup.string().required("Required"),
 	gender: Yup.string()
-		.oneOf(["MALE", "FEMALE"], "Invalid gender")
+		.oneOf(getGenderValues(), "Invalid gender")
 		.required("Required"),
 	birthPlace: Yup.string().required("Required"),
 	birthDay: Yup.string().required("Required"),
@@ -47,7 +52,7 @@ export const createManagerAction = async (prevState, formData) => {
 		const data = await res.json();
 
 		if (!res.ok) {
-			return response(false, "", data?.validations);
+			return response(false, data?.message, data?.validations);
 		}
 	} catch (err) {
 		if (err instanceof Yup.ValidationError) {
@@ -71,7 +76,7 @@ export const updateManagerAction = async (prevState, formData) => {
 		const data = await res.json();
 
 		if (!res.ok) {
-			return response(false, "", data?.validations);
+			return response(false, data?.message, data?.validations);
 		}
 	} catch (err) {
 		if (err instanceof Yup.ValidationError) {
