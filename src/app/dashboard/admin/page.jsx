@@ -6,10 +6,12 @@ import React from "react";
 
 const AdminPage = async ({ searchParams }) => {
 	const { page } = searchParams;
+	
 
-	const res = await getAllAdminsByPage(page);
+	const res = await getAllAdminsByPage(page,3);
 	const data = await res.json();
 	if (!res.ok) throw new Error(data.message);
+	
 
 	return (
 		<>

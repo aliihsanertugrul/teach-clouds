@@ -28,7 +28,8 @@ const config = {
 			const isLoggedIn = !!auth?.user;
 			const isOnLoginPage = nextUrl.pathname.startsWith("/login");
 			const isOnDashboardPage = nextUrl.pathname.startsWith("/dashboard");
-
+				// console.log("auth",auth)
+				// console.log("nexturl",nextUrl)
 			//console.log(`isLoggedIn:`, isLoggedIn)
 			//console.log(`isOnLoginPage:`, isOnLoginPage)
 
