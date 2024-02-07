@@ -11,7 +11,7 @@ const MultiSelect = ({
 	error,
 }) => {
 	const [list, setList] = useState(Array.isArray(values) ? [...values] : []);
-	console.log(list);
+
 	const handleChange = (e) => {
 		let arr = [];
 		const id = e.target.value;
@@ -23,6 +23,14 @@ const MultiSelect = ({
 		}
 		setList(arr);
 	};
+
+	const isChecked = (id) => { 
+		if(!values || !Array.isArray(values) || values.length <= 0){
+			return false
+		}
+
+		return values.includes(id.toString())
+	 }
 
 	return (
 		<>
@@ -63,6 +71,7 @@ const MultiSelect = ({
 										style={{ cursor: "pointer" }}
 										defaultValue={item[optionValue]}
 										onChange={handleChange}
+										defaultChecked={isChecked(item[optionValue])}
 									/>
 									<label
 										className="form-check-label w-100"

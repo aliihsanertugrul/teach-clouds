@@ -100,6 +100,7 @@ export const updateTeacherAction = async (prevState, formData) => {
 			lessonsIdList: JSON.parse(fields.lessonsIdList),
 		};
 
+
 		const res = await updateTeacher(payload);
 		const data = await res.json();
 

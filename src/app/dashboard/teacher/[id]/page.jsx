@@ -19,7 +19,7 @@ const EditTeacherPage = async ({ params }) => {
 
 	return (
 		<>
-			<PageHeader title="Edit Assistant" />
+			<PageHeader title="Edit Teacher" />
 			<Spacer height={50} />
 			<EditTeacherForm
 				programs={allPrograms}
