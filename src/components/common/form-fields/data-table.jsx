@@ -1,12 +1,25 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 export const Column = ({ title }) => {
 	return <th scope="col">{title}</th>;
 };
 
-const Row = ({ children }) => {
-	return <tr className="">{children}</tr>;
+const Row = ({ children, selected, selectionMode, onClick }) => {
+	console.log(selected);
+	return (
+		<tr
+			onClick={onClick}
+			className={selected ? "table-primary" : ""}
+			style={{
+				cursor:
+					selectionMode && selectionMode !== "none" ? "pointer" : "",
+			}}
+		>
+			{children}
+		</tr>
+	);
 };
 
 const Cell = ({ children }) => {
@@ -89,6 +102,7 @@ const Pagination = ({ totalPages, pageNumber, pageSize }) => {
 };
 
 const DataTable = ({
+	id,
 	title,
 	dataSource,
 	dataKey,
@@ -97,95 +111,189 @@ const DataTable = ({
 	pageNumber,
 	pageSize,
 	children,
+	selectionMode, // single | multiple | none
+	selection, // update yapilarinda onceden secili olarak gelmesi istenilen elemanlarin listesi
+	error,
 }) => {
-	// children korumali bir prop oldugu icin uzerinde degisiklik yapmaya izin vermez
-	// degisiklik yapabilmek icin kopyasini olusturduk
+	const [selectedItems, setSelectedItems] = useState(selection ?? []);
 
 	if (!dataSource) throw new Error("dataSource attribute is required");
 	if (!Array.isArray(dataSource))
 		throw new Error("dataSource value must be an array");
 	if (!dataKey) throw new Error("dataKey attribute is required");
 
+	// children korumali bir prop oldugu icin uzerinde degisiklik yapmaya izin vermez
+	// degisiklik yapabilmek icin kopyasini olusturduk
 	const columns = [...children];
 
+	if (!pageSize) pageSize = 0;
+	if (!pageNumber) pageNumber = 0;
+
+	if (selectionMode && selectionMode !== "none") {
+		columns.splice(
+			1,
+			0,
+			<Column selectionMode={selectionMode} title="Select" />
+		);
+	}
+
+	const handleSelectedItems = (id) => {
+		console.log(id);
+		let arr = [...selectedItems];
+
+		if (!arr.includes(id)) {
+			arr.push(id);
+		} else {
+			arr = arr.filter((item) => item !== id);
+		}
+		setSelectedItems(arr);
+	};
+
+	//console.log(selectedItems);
+
 	return (
-		<div className="card">
-			<div className="card-body">
-				<h3 className="card-title">{title}</h3>
+		<>
+			<input
+				type="hidden"
+				name={id}
+				value={JSON.stringify(selectedItems)}
+			/>
+			<div className={`card ${error ? "border-danger" : ""}`}>
+				<div className="card-body">
+					<h3 className="card-title">{title}</h3>
 
-				<div className="table-responsive">
-					<table className="table table-striped ">
-						<thead>
-							<tr>
-								{columns.map((item) => (
-									<Column
-										key={item.props.title}
-										{...item.props}
-									/>
-								))}
-							</tr>
-						</thead>
-						<tbody>
-							{dataSource.length <= 0 ? (
-								<NoRecordFound colLength={columns.length} />
-							) : null}
+					<div className="table-responsive">
+						<table className="table table-striped ">
+							<thead>
+								<tr>
+									{columns.map((item) => (
+										<Column
+											key={item.props.title}
+											{...item.props}
+										/>
+									))}
+								</tr>
+							</thead>
+							<tbody>
+								{dataSource.length <= 0 ? (
+									<NoRecordFound colLength={columns.length} />
+								) : null}
 
-							{dataSource.map((row, indexRow) => {
-								//console.log(row);
-								return (
-									<Row key={`row-${row[dataKey]}`}>
-										{columns.map((column) => {
-											const {
-												field,
-												index,
-												title,
-												template,
-											} = column.props;
-											let cellData = "";
+								{dataSource.map((row, indexRow) => {
+									//console.log(row);
+									const selected = selectedItems.includes(
+										row[dataKey].toString()
+									);
 
-											if (index) {
-												cellData =
-													pageSize * pageNumber +
-													indexRow +
-													1;
-											} else if (field) {
-												cellData = row[field];
-											} else if (template) {
-												if (
-													typeof template !==
-													"function"
+									return (
+										<Row
+											key={`row-${row[dataKey]}`}
+											selected={selected}
+											selectionMode={selectionMode}
+											onClick={() =>
+												handleSelectedItems(
+													row[dataKey].toString()
+												)
+											}
+										>
+											{columns.map((column) => {
+												const {
+													field,
+													index,
+													title,
+													template,
+													selectionMode,
+												} = column.props;
+												let cellData = "";
+
+												if (index) {
+													cellData =
+														pageSize * pageNumber +
+														indexRow +
+														1;
+												} else if (
+													selectionMode &&
+													selectionMode !== "none"
 												) {
-													throw new Error(
-														"template prop must be a function"
-													);
+													cellData =
+														selectionMode ===
+														"single" ? (
+															<input
+																type="radio"
+																className="form-check-input"
+																name="rd"
+																value={
+																	row[dataKey]
+																}
+																onChange={(e) =>
+																	handleSelectedItems(
+																		e.target
+																			.value
+																	)
+																}
+																checked={
+																	selected
+																}
+															/>
+														) : (
+															<input
+																type="checkbox"
+																className="form-check-input"
+																value={
+																	row[dataKey]
+																}
+																onChange={(e) =>
+																	handleSelectedItems(
+																		e.target
+																			.value
+																	)
+																}
+																checked={
+																	selected
+																}
+															/>
+														);
+												} else if (field) {
+													cellData = row[field];
+												} else if (template) {
+													if (
+														typeof template !==
+														"function"
+													) {
+														throw new Error(
+															"template prop must be a function"
+														);
+													}
+
+													cellData = template(row);
 												}
 
-												cellData = template(row);
-											}
-
-											return (
-												<Cell
-													key={`col-${row[dataKey]}-${title}`}
-												>
-													{cellData}
-												</Cell>
-											);
-										})}
-									</Row>
-								);
-							})}
-						</tbody>
-					</table>
+												return (
+													<Cell
+														key={`col-${row[dataKey]}-${title}`}
+													>
+														{cellData}
+													</Cell>
+												);
+											})}
+										</Row>
+									);
+								})}
+							</tbody>
+						</table>
+					</div>
+					{pagination ? (
+						<Pagination
+							totalPages={totalPages}
+							pageNumber={pageNumber}
+							pageSize={pageSize}
+						/>
+					) : null}
 				</div>
-				{pagination ? (
-					<Pagination
-						totalPages={totalPages}
-						pageNumber={pageNumber}
-						pageSize={pageSize}
-					/>
-				) : null}
+
+				{error ? <div className="p-3 text-danger">{error}</div> : null}
 			</div>
-		</div>
+		</>
 	);
 };
 
