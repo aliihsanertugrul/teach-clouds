@@ -1,38 +1,35 @@
-"use client"
+"use client";
 import DataTable, { Column } from "@/components/common/form-fields/data-table";
-import Link from "next/link";
-import React from "react";
-import AdminToolbar from "./admin-toolbar";
+import { formatTimeLT } from "@/helpers/date-time";
 
-const AdminList = ({ data }) => {
-	const { content, totalPages, number, size } = data;
-
-	const handleToolbar = (row) => {
-		return <AdminToolbar row={row}/>;
+const StudentProgramList = ({ studentPrograms }) => {
+	const handleLessonNames = (row) => {
+		return row.lessonName.map((item) => item.lessonName).join("-");
 	};
+
+	const handleTeacherNames = (row) => {
+		return row.teachers.map((item) => item.name).join("-");
+	};
+
+	const handleTime = (row) =>
+		`${formatTimeLT(row.startTime)} - ${formatTimeLT(row.stopTime)}`;
 
 	return (
 		<div className="container">
-			<Link href="/dashboard/admin/new" className="btn btn-primary mb-3">
-				New
-			</Link>
 			<DataTable
-				title="Admin List"
-				dataSource={content}
-				dataKey="id"
-				pagination={true}
-				totalPages={totalPages}
-				pageNumber={number}
-				pageSize={size}
+				id="lessonProgramId"
+				title="Student Programs"
+				dataSource={studentPrograms}
+				dataKey="lessonProgramId"
 			>
 				<Column index={true} title="#" />
-				<Column title="First Name" field="name" />
-				<Column title="Last Name" field="surname" />
-				<Column title="Username" field="username" />
-				<Column title="Tools" template={handleToolbar} />
+				<Column title="Lessons" template={handleLessonNames} />
+				<Column title="Teachers" template={handleTeacherNames} />
+				<Column title="Day" field="day" />
+				<Column title="Start-End" template={handleTime} />
 			</DataTable>
 		</div>
 	);
 };
 
-export default AdminList;
+export default StudentProgramList;

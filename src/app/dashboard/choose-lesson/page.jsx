@@ -1,24 +1,40 @@
 import PageHeader from "@/components/common/page-header";
 import Spacer from "@/components/common/misc/spacer";
-import AdminList from "@/components/dashboard/admin/admin-list";
-import { getAllAdminsByPage } from "@/services/admin-service";
 import React from "react";
+import {
+	getAllPrograms,
+	getAllProgramsByStudent,
+} from "@/services/program-service";
+import AllProgramProgramList from "@/components/dashboard/choose-lesson/all-program-list";
+import StudentProgramList from "@/components/dashboard/choose-lesson/student-program-list";
 
-const AdminPage = async ({ searchParams }) => {
-	const { page } = searchParams;
+const ChooseLessonPage = async () => {
+	const dataAllPrograms = (await getAllPrograms()).json();
+	const dataStudentPrograms = (await getAllProgramsByStudent()).json();
 
-	const res = await getAllAdminsByPage(page);
-	const data = await res.json();
-	if (!res.ok) throw new Error(data.message);
+	const [allPrograms, studentPrograms] = await Promise.all([
+		dataAllPrograms,
+		dataStudentPrograms,
+	]);
+
+	const arr = allPrograms.filter(
+		(itemAll) =>
+			!studentPrograms.find(
+				(itemStudent) =>
+					itemStudent.lessonProgramId === itemAll.lessonProgramId
+			)
+	);
 
 	return (
 		<>
-			<PageHeader title="Admin" />
+			<PageHeader title="Choose Lesson" />
 			<Spacer height={50} />
-			<AdminList data={data} />
+			<AllProgramProgramList allPrograms={arr} />
+			<Spacer />
+			<StudentProgramList studentPrograms={studentPrograms} />
 			<Spacer />
 		</>
 	);
 };
 
-export default AdminPage;
+export default ChooseLessonPage;
