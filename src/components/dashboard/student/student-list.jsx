@@ -8,7 +8,6 @@ const StudentList = ({ data }) => {
 	const { content, totalPages, number, size } = data;
 
 	const handleToolbar = (row) => {
-		console.log(row)
 		return <StudentToolbar row={row} />;
 	};
 

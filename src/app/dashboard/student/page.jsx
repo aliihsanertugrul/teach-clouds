@@ -1,5 +1,5 @@
 import PageHeader from "@/components/common/page-header";
-import Spacer from "@/components/common/spacer";
+import Spacer from "@/components/common/misc/spacer";
 import StudentList from "@/components/dashboard/student/student-list";
 import { getAllStudentsByPage } from "@/services/student-service";
 import React from "react";

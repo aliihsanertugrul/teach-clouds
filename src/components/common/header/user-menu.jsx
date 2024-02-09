@@ -5,7 +5,7 @@ import UserMenuGuest from "./user-menu-guest";
 
 const UserMenu = async () => {
 	const session = await auth();
-	console.log(session)
+
 	return (
 		<div>
 			{session?.user?.role ? (

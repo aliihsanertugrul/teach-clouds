@@ -6,7 +6,7 @@ import React from "react";
 import { TfiPencil, TfiTrash } from "react-icons/tfi";
 
 const TeacherToolbar = ({ row }) => {
-	console.log(row)
+
 	const { userId, built_in } = row;
 
 	const handleDelete = async () => {

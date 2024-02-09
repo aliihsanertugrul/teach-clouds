@@ -1,5 +1,5 @@
 import PageHeader from "@/components/common/page-header";
-import Spacer from "@/components/common/spacer";
+import Spacer from "@/components/common/misc/spacer";
 import ContactMessageList from "@/components/dashboard/contact-message/contact-message-list";
 import { getAllMessagesByPage } from "@/services/contact-service";
 import React from "react";
@@ -12,8 +12,6 @@ const ContactMessagePage = async ({ searchParams }) => {
 	if (!res.ok) throw new Error(data.message);
 
 	data.content = data.content.map((item, index) => ({ ...item, id: index }));
-
-	console.log(data);
 
 	return (
 		<>

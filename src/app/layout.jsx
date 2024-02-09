@@ -8,6 +8,7 @@ import Messenger from "@/components/common/misc/messenger";
 
 const montserrat = Montserrat({
 	subsets: ["latin"],
+	weight: "400",
 	variable: "--font-montserrat",
 });
 
@@ -26,9 +27,9 @@ export default function RootLayout({ children }) {
 				<BootstrapProvider>
 					<Header />
 					<main>{children}</main>
-					<Footer/>
-					<Messenger/>
+					<Footer />
 				</BootstrapProvider>
+				<Messenger />
 			</body>
 		</html>
 	);

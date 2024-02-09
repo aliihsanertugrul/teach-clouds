@@ -1,5 +1,5 @@
 import PageHeader from '@/components/common/page-header'
-import Spacer from '@/components/common/spacer'
+import Spacer from '@/components/common/misc/spacer'
 import NewStudentForm from '@/components/dashboard/student/new-student-form'
 import { getAllAdvisorTeachers } from '@/services/teacher-service'
 import React from 'react'

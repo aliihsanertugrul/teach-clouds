@@ -25,7 +25,7 @@ const config = {
 	callbacks: {
 		// middleware in kapsama alanina giren sayfalara yapilan isteklerden hemen once calisir
 		authorized({ auth, request: { nextUrl } }) {
-			const isLoggedIn = !!auth?.user;
+			const isLoggedIn = !!auth?.user?.role;
 			const isOnLoginPage = nextUrl.pathname.startsWith("/login");
 			const isOnDashboardPage = nextUrl.pathname.startsWith("/dashboard");
 			const isTokenValid = getIsTokenValid(auth?.accessToken);
@@ -65,9 +65,8 @@ const config = {
 		},
 		//Session datasina ihtiyac duyan her route icin bu callback cagrilir
 		async session({ session, token }) {
-			const isTokenValid = getIsTokenValid(auth?.accessToken);
-			if(!isTokenValid) return;
-
+			const isTokenValid = getIsTokenValid(token.accessToken);
+			if(!isTokenValid) return null;
 
 			session.accessToken = token.accessToken;
 			session.user = token.user;

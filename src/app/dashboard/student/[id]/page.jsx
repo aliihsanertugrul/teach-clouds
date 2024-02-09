@@ -1,5 +1,5 @@
 import PageHeader from "@/components/common/page-header";
-import Spacer from "@/components/common/spacer";
+import Spacer from "@/components/common/misc/spacer";
 import EditStudentForm from "@/components/dashboard/student/edit-student-form";
 import { getStudentById } from "@/services/student-service";
 import { getAllAdvisorTeachers } from "@/services/teacher-service";
