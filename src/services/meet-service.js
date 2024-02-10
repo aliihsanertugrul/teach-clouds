@@ -36,7 +36,6 @@ export const deleteMeet = async (id) => {
 };
 
 export const createMeet = async (payload) => {
-	console.log(payload)
 	return fetch(`${API_URL}/meet/save`, {
 		method: "post",
 		headers: await getAuthHeader(),

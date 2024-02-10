@@ -1,6 +1,6 @@
 "use client";
 import DataTable, { Column } from "@/components/common/form-fields/data-table";
-import { formatTimeLT } from "@/helpers/date-time";
+import { formatDateLL, formatTimeLT } from "@/helpers/date-time";
 
 const MeetList = ({ meets }) => {
 	const handleTime = (row) =>
